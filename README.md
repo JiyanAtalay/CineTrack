@@ -17,7 +17,6 @@ Browse trending, popular, and top-rated movies, search instantly with debounce, 
   <img src="https://github.com/user-attachments/assets/17e2d2c9-b4c1-4056-bfe4-bf80a4169531" width="24%" />
   <img src="https://github.com/user-attachments/assets/d350a481-b41c-4228-b94c-b92ff266d6d4" width="24%" />
   <img src="https://github.com/user-attachments/assets/f934b852-4b25-4c50-b4ba-03d9836e34de" width="24%" />
-  <img src="https://github.com/user-attachments/assets/edf6f9d5-f540-4cb7-ad1c-63ab87025c5d" width="24%" />
   <img src="https://github.com/user-attachments/assets/771fa027-5da7-4f9c-9bc8-f4ce8c4c4f6d" width="24%" />
 </p>
 
