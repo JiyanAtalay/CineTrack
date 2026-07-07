@@ -154,7 +154,3 @@ Covered components include:
 ## 👨‍💻 Author
 **Mehmet Jiyan Atalay** * LinkedIn: [Mehmet Jiyan Atalay](https://www.linkedin.com/in/jiyan-atalay-407360279/)
 * GitHub: [@JiyanAtalay](https://github.com/JiyanAtalay)
-
-GitHub: https://github.com/JiyanAtalay
-
-LinkedIn: https://www.linkedin.com/in/jiyan-atalay-407360279/
