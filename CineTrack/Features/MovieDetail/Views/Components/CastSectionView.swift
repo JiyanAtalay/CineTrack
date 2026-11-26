@@ -21,7 +21,12 @@ struct CastSectionView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 16) {
                     ForEach(cast) { actor in
-                        CastCard(cast: actor)
+                        NavigationLink {
+                            PersonDetailView(route: PersonRoute(id: actor.id, name: actor.name, role: .acting))
+                        } label: {
+                            CastCard(cast: actor)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal)

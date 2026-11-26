@@ -15,6 +15,7 @@ struct MovieDetailView: View {
     let movieId: Int
     
     @State private var viewModel: MovieDetailViewModel = DIContainer.shared.makeMovieDetailViewModel()
+    @State private var selectedPerson: PersonRoute?
     
     init(movieId: Int) {
         self.movieId = movieId
@@ -25,7 +26,9 @@ struct MovieDetailView: View {
             if let movie = viewModel.movie {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 24) {
-                        MovieHeaderView(movie: movie)
+                        MovieHeaderView(movie: movie, directors: viewModel.directors) { director in
+                            selectedPerson = PersonRoute(id: director.id, name: director.name, role: .directing)
+                        }
                         MovieActionButtons(movie: movie, trailerURL: viewModel.trailerURL, watchStatus: viewModel.watchStatus, isFavorite: viewModel.isFavorite, onWatchStatusChange: { status in
                                 viewModel.setWatchStatus(status)
                             }, onToggleFavorite: {
@@ -72,6 +75,9 @@ struct MovieDetailView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
+        .navigationDestination(item: $selectedPerson) { person in
+            PersonDetailView(route: person)
+        }
         .task {
             
             viewModel.configure(watchListRepository: WatchlistRepository(context: modelContext))
