@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Şablon: bu dosyayı CineTrack/Resources/Config.plist olarak kopyalayın ve
+  TMDB_API_KEY değerini kendi TMDB v4 "API Read Access Token"ınızla değiştirin
+  (https://www.themoviedb.org/settings/api). Config.plist gitignore'dadır; commit etmeyin.
+
+  cp Config.example.plist CineTrack/Resources/Config.plist
+-->
+<plist version="1.0">
+<dict>
+	<key>TMDB_API_KEY</key>
+	<string>YOUR_TMDB_V4_READ_ACCESS_TOKEN</string>
+</dict>
+</plist>

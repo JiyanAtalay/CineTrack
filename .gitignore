@@ -33,10 +33,9 @@ fastlane/screenshots/
 # macOS
 .DS_Store
 
-# API Keys (IMPORTANT 🔐)
-APIKey.swift
-
-# Secrets
+# Secrets (IMPORTANT 🔐)
+# APIKey.swift sadece Config.plist'i okur, sır içermez ve takip edilir.
+# Gerçek token yalnızca Config.plist'te durur; şablon için Config.example.plist'e bakın.
 Config.plist
 .env
 
