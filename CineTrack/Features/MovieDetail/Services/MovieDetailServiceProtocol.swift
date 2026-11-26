@@ -10,6 +10,6 @@ import Foundation
 protocol MovieDetailServiceProtocol {
     func fetchMovieDetail(id: Int) async throws -> MovieDetailResponse
     func fetchTrailer(id: Int) async throws -> URL?
-    func fetchCast(id: Int) async throws -> [Cast]
+    func fetchCredits(id: Int) async throws -> CreditsResponse
     func fetchSimilarMovies(id: Int) async throws -> [Movie]
 }

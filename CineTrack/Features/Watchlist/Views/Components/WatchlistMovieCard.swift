@@ -22,10 +22,24 @@ struct WatchlistMovieCard: View {
             .frame(maxWidth: .infinity)
             .clipped()
             .clipShape(RoundedRectangle(cornerRadius: 16))
+            .overlay(alignment: .topLeading) {
+                if let status = movie.movieWatchStatus {
+                    WatchStatusBadge(status: status)
+                        .padding(8)
+                }
+            }
+            .overlay(alignment: .topTrailing) {
+                if movie.isFavorite {
+                    FavoriteBadge()
+                        .padding(8)
+                }
+            }
             
             Text(movie.title)
                 .font(.headline)
                 .lineLimit(2)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: 44, alignment: .top)
             
             HStack {
                 Image(systemName: "star.fill")

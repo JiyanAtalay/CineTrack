@@ -11,7 +11,7 @@ import Foundation
 final class MockMovieDetailService: MovieDetailServiceProtocol {
     var movie: MovieDetailResponse!
     var trailerURL: URL?
-    var cast: [Cast] = []
+    var credits = CreditsResponse(cast: [], crew: [])
     var similarMovies: [Movie] = []
 
     func fetchMovieDetail(id: Int) async throws -> MovieDetailResponse {
@@ -22,8 +22,8 @@ final class MockMovieDetailService: MovieDetailServiceProtocol {
         trailerURL
     }
 
-    func fetchCast(id: Int) async throws -> [Cast] {
-        cast
+    func fetchCredits(id: Int) async throws -> CreditsResponse {
+        credits
     }
 
     func fetchSimilarMovies(id: Int) async throws -> [Movie] {

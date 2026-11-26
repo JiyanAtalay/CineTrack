@@ -18,12 +18,31 @@ final class WatchlistMovie {
     var releaseDate: String?
     var voteAverage: Double
     
-    init(id: Int, title: String, posterPath: String?, backdropPath: String?, releaseDate: String?, voteAverage: Double) {
+    var watchStatus: String? = MovieWatchStatus.planned.rawValue
+    var isFavorite: Bool = false
+    
+    var genreNames: [String] = []
+    var runtime: Int? = nil
+    var directorName: String? = nil
+    
+    init(id: Int, title: String, posterPath: String?, backdropPath: String?, releaseDate: String?, voteAverage: Double,
+         watchStatus: String? = MovieWatchStatus.planned.rawValue, isFavorite: Bool = false,
+         genreNames: [String] = [], runtime: Int? = nil, directorName: String? = nil) {
         self.id = id
         self.title = title
         self.posterPath = posterPath
         self.backdropPath = backdropPath
         self.releaseDate = releaseDate
         self.voteAverage = voteAverage
+        self.watchStatus = watchStatus
+        self.isFavorite = isFavorite
+        self.genreNames = genreNames
+        self.runtime = runtime
+        self.directorName = directorName
+    }
+    
+    var movieWatchStatus: MovieWatchStatus? {
+        guard let watchStatus else { return nil }
+        return MovieWatchStatus(rawValue: watchStatus)
     }
 }

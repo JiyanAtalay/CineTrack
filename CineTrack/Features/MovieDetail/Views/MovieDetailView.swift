@@ -26,10 +26,12 @@ struct MovieDetailView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 24) {
                         MovieHeaderView(movie: movie)
-                        MovieActionButtons(movie: movie, trailerURL: viewModel.trailerURL, isInWatchlist: viewModel.isInWatchlist)
-                        {
-                            viewModel.toggleWatchList()
-                        }
+                        MovieActionButtons(movie: movie, trailerURL: viewModel.trailerURL, watchStatus: viewModel.watchStatus, isFavorite: viewModel.isFavorite, onWatchStatusChange: { status in
+                                viewModel.setWatchStatus(status)
+                            }, onToggleFavorite: {
+                                viewModel.toggleFavorite()
+                            }
+                        )
                         GenreSectionView(genres: movie.genres)
                         
                         VStack(alignment: .leading, spacing: 12) {
@@ -43,6 +45,21 @@ struct MovieDetailView: View {
                         if !viewModel.cast.isEmpty {
                             CastSectionView(cast: viewModel.cast)
                         }
+                        
+                        PersonalRatingSection(
+                            selectedRating: $viewModel.selectedRating,
+                            reviewText: $viewModel.reviewText,
+                            hasExistingRating: viewModel.personalRating != nil,
+                            isSaving: viewModel.isSavingRating,
+                            errorMessage: viewModel.ratingErrorMessage,
+                            onSave: {
+                                await viewModel.savePersonalRating()
+                            },
+                            onDelete: {
+                                viewModel.deletePersonalRating()
+                            }
+                        )
+                        .padding(.horizontal)
                         
                         if !viewModel.similarMovies.isEmpty {
                             SimilarMoviesSectionView(movies: viewModel.similarMovies)
@@ -58,6 +75,8 @@ struct MovieDetailView: View {
         .task {
             
             viewModel.configure(watchListRepository: WatchlistRepository(context: modelContext))
+            viewModel.configure(personalRatingRepository: DIContainer.shared
+                .makePersonalMovieRatingRepository(context: modelContext))
             
             await viewModel.loadMovie(id: movieId)
         }

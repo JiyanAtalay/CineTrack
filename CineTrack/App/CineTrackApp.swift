@@ -14,6 +14,9 @@ struct CineTrackApp: App {
         WindowGroup {
             MainTabView()
         }
-        .modelContainer(for: WatchlistMovie.self)
+        .modelContainer(for: [
+            WatchlistMovie.self,
+            PersonalMovieRating.self
+        ])
     }
 }

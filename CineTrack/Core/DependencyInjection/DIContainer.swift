@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @MainActor
 final class DIContainer {
@@ -32,5 +33,9 @@ final class DIContainer {
     
     func makeSearchViewModel() -> SearchViewModel {
         SearchViewModel(searchService: searchService)
+    }
+    
+    func makePersonalMovieRatingRepository(context: ModelContext ) -> PersonalMovieRatingRepositoryProtocol {
+        PersonalMovieRatingRepository(context: context)
     }
 }

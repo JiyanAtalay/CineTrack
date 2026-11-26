@@ -31,13 +31,11 @@ final class MovieDetailService: MovieDetailServiceProtocol {
         return URL(string: "https://www.youtube.com/watch?v=\(trailer.key)")
     }
     
-    func fetchCast(id: Int) async throws -> [Cast] {
-        let response = try await networkService.request(
+    func fetchCredits(id: Int) async throws -> CreditsResponse {
+        try await networkService.request(
             endpoint: TMDBEndpoint.movieCredits(id: id),
             responseModel: CreditsResponse.self
         )
-        
-        return Array(response.cast.prefix(15))
     }
     
     func fetchSimilarMovies(id: Int) async throws -> [Movie] {
