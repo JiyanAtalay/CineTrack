@@ -21,6 +21,7 @@ final class DIContainer {
     lazy var movieDetailService: MovieDetailServiceProtocol = MovieDetailService(networkService: networkService)
     lazy var searchService: SearchServiceProtocol = SearchService(networkService: networkService)
     lazy var personService: PersonServiceProtocol = PersonService(networkService: networkService)
+    lazy var tonightService: TonightServiceProtocol = TonightService(networkService: networkService)
     
     // MARK: ViewModels
     
@@ -38,6 +39,14 @@ final class DIContainer {
     
     func makePersonDetailViewModel() -> PersonDetailViewModel {
         PersonDetailViewModel(service: personService)
+    }
+    
+    func makeTonightViewModel() -> TonightViewModel {
+        TonightViewModel(
+            service: tonightService,
+            detailService: movieDetailService,
+            filterStore: UserDefaultsTonightFilterStore()
+        )
     }
     
     func makePersonalMovieRatingRepository(context: ModelContext ) -> PersonalMovieRatingRepositoryProtocol {

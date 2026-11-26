@@ -18,6 +18,8 @@ enum TMDBEndpoint: Endpoint {
     case similarMovies(id: Int)
     case personDetail(id: Int, language: String)
     case personMovieCredits(id: Int)
+    case movieGenres
+    case discover(filters: DiscoverFilters, page: Int)
     
     var path: String {
         switch self {
@@ -41,6 +43,10 @@ enum TMDBEndpoint: Endpoint {
             return "/3/person/\(id)"
         case .personMovieCredits(let id):
             return "/3/person/\(id)/movie_credits"
+        case .movieGenres:
+            return "/3/genre/movie/list"
+        case .discover:
+            return "/3/discover/movie"
         }
     }
     
@@ -57,7 +63,8 @@ enum TMDBEndpoint: Endpoint {
                 .movieVideos,
                 .movieCredits,
                 .similarMovies,
-                .personMovieCredits:
+                .personMovieCredits,
+                .movieGenres:
             
             return [URLQueryItem(name: "language", value: "tr-TR")]
         
@@ -67,6 +74,12 @@ enum TMDBEndpoint: Endpoint {
         case .search(query: let query, page: let page):
             return [
                 URLQueryItem(name: "query", value: query),
+                URLQueryItem(name: "page", value: "\(page)"),
+                URLQueryItem(name: "language", value: "tr-TR")
+            ]
+            
+        case .discover(filters: let filters, page: let page):
+            return filters.queryItems + [
                 URLQueryItem(name: "page", value: "\(page)"),
                 URLQueryItem(name: "language", value: "tr-TR")
             ]
