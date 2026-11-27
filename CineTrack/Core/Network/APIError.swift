@@ -18,15 +18,26 @@ enum APIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Invalid URL"
+            return "The request couldn't be created."
         case .invalidResponse:
-            return "Invalid response"
+            return "The server sent an unexpected response. Please try again."
         case .statusCode(let code):
-            return "Invalid status code: \(code)"
+            switch code {
+            case 401, 403:
+                return "The movie service rejected the request (\(code))."
+            case 404:
+                return "We couldn't find what you were looking for."
+            case 429:
+                return "Too many requests. Please wait a moment and try again."
+            case 500...599:
+                return "The movie service is having trouble right now. Please try again later."
+            default:
+                return "Something went wrong (error \(code)). Please try again."
+            }
         case .decodingError:
-            return "Failed to decode response"
+            return "We received data we couldn't read. Please try again later."
         case .noInternet:
-            return "No internet connection"
+            return "You're offline. Check your internet connection and try again."
         case .unknown(let error):
             return error.localizedDescription
         }

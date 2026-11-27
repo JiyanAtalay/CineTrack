@@ -64,10 +64,17 @@ final class NetworkService: NetworkServiceProtocol {
                 throw APIError.decodingError
             }
             
+        } catch let error as APIError {
+            // İçeride fırlatılan APIError'ları .unknown içine tekrar sarma
+            throw error
+
         } catch let error as URLError {
-            
-            if error.code == .notConnectedToInternet {
+
+            switch error.code {
+            case .notConnectedToInternet, .networkConnectionLost, .dataNotAllowed:
                 throw APIError.noInternet
+            default:
+                break
             }
             
             throw APIError.unknown(error)

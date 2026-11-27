@@ -67,18 +67,13 @@ struct TonightView: View {
                 isOverviewExpanded = false
             }
         } else if viewModel.isLoading {
-            ProgressView()
+            LoadingStateView(message: "Finding a movie for tonight…")
         } else if let errorMessage = viewModel.errorMessage {
-            ContentUnavailableView {
-                Label("Something went wrong", systemImage: "wifi.exclamationmark")
-            } description: {
-                Text(errorMessage)
-            } actions: {
-                Button("Retry") {
-                    Task { await viewModel.suggestAnother() }
-                }
-                .buttonStyle(.borderedProminent)
-            }
+            ErrorStateView(
+                title: "Couldn't Find a Movie",
+                message: errorMessage,
+                onRetry: { await viewModel.suggestAnother() }
+            )
         } else if viewModel.isEmptyResult {
             TonightEmptyStateView(
                 hasFilters: !viewModel.filters.isEmpty,
@@ -86,7 +81,7 @@ struct TonightView: View {
                 onRetry: { Task { await viewModel.resetFilters() } }
             )
         } else {
-            ProgressView()
+            LoadingStateView(message: "Finding a movie for tonight…")
         }
     }
 

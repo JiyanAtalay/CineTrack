@@ -32,13 +32,13 @@ struct PersonDetailView: View {
                     .padding(.vertical)
                 }
             } else if let errorMessage = viewModel.errorMessage {
-                ContentUnavailableView(
-                    "Couldn't load \(route.name)",
-                    systemImage: "exclamationmark.triangle",
-                    description: Text(errorMessage)
+                ErrorStateView(
+                    title: "Couldn't Load \(route.name)",
+                    message: errorMessage,
+                    onRetry: { await viewModel.load(id: route.id, role: route.role) }
                 )
             } else {
-                ProgressView()
+                LoadingStateView()
             }
         }
         .navigationTitle(route.name)
@@ -66,10 +66,12 @@ struct PersonDetailView: View {
             .padding(.horizontal)
 
             if viewModel.movies.isEmpty {
-                Text("No movies found")
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 32)
+                ContentUnavailableView(
+                    "No Movies Found",
+                    systemImage: "film",
+                    description: Text("There are no \(route.role.title.lowercased()) credits to show.")
+                )
+                .padding(.vertical, 16)
             } else {
                 PersonMoviesGridView(movies: viewModel.movies)
             }

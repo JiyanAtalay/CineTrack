@@ -84,4 +84,5 @@ Models are registered in `CineTrackApp.modelContainer(for: [WatchlistMovie.self,
 
 - UI strings are in English. Some code comments are in Turkish.
 - One type per file, with the standard Xcode header comment.
+- Full-screen states use the shared `LoadingStateView` and `ErrorStateView` (with an async `onRetry`) from `Resources/Components`; empty states use `ContentUnavailableView`. View models reset `errorMessage` when a load starts and skip cancelled requests (`error.isCancellation`).
 - Keep view subcomponents in `Views/Components/` of their feature. Reusable display logic goes in `Core/Extensions` as `+Display` extensions.

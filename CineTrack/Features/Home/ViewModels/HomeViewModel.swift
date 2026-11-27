@@ -20,15 +20,23 @@ final class HomeViewModel {
     var isLoading: Bool = false
     
     var errorMessage: String?
-    
+
+    /// İlk yükleme bitti mi (başarılı ya da hatalı); boş durumu ilk açılıştaki anlık durumdan ayırır.
+    private(set) var hasLoaded = false
+
+    var hasContent: Bool {
+        !trendingMovies.isEmpty || !populerMovies.isEmpty || !topRatedMovies.isEmpty
+    }
+
     init(movieService: MovieServiceProtocol) {
         self.movieService = movieService
     }
-    
+
     func fetchHomeData() async {
-        
+
         isLoading = true
-        
+        errorMessage = nil
+
         defer {
             isLoading = false
         }
@@ -42,9 +50,12 @@ final class HomeViewModel {
             trendingMovies = try await trending
             populerMovies = try await populer
             topRatedMovies = try await topRated
-            
+            hasLoaded = true
+
         } catch {
+            guard !error.isCancellation else { return }
             errorMessage = error.localizedDescription
+            hasLoaded = true
         }
     }
 }

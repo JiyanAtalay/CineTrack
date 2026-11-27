@@ -69,8 +69,14 @@ struct MovieDetailView: View {
                         }
                     }
                 }
+            } else if let errorMessage = viewModel.errorMessage {
+                ErrorStateView(
+                    title: "Couldn't Load Movie",
+                    message: errorMessage,
+                    onRetry: { await viewModel.loadMovie(id: movieId) }
+                )
             } else {
-                ProgressView()
+                LoadingStateView()
             }
         }
         .navigationBarTitleDisplayMode(.inline)

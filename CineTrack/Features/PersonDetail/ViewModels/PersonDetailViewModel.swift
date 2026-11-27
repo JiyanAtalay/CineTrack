@@ -58,6 +58,7 @@ final class PersonDetailViewModel {
             movies = Self.movies(from: loadedCredits, role: role)
             refreshWatchedCount()
         } catch {
+            guard !error.isCancellation else { return }
             errorMessage = error.localizedDescription
         }
     }

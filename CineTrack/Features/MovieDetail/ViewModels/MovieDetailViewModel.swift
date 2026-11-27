@@ -42,7 +42,8 @@ final class MovieDetailViewModel {
     
     func loadMovie(id: Int) async {
         isLoading = true
-        
+        errorMessage = nil
+
         defer {
             isLoading = false
         }
@@ -62,6 +63,7 @@ final class MovieDetailViewModel {
             directors = credits.directors
             similarMovies = try await similar
         } catch {
+            guard !error.isCancellation else { return }
             errorMessage = error.localizedDescription
         }
     }

@@ -82,4 +82,5 @@ Modeller `CineTrackApp.modelContainer(for: [WatchlistMovie.self, PersonalMovieRa
 
 - Arayüz metinleri İngilizcedir. Bazı kod yorumları Türkçedir.
 - Her dosyada bir tip bulunur ve standart Xcode başlık yorumu kullanılır.
+- Tam ekran durumlar `Resources/Components` altındaki ortak `LoadingStateView` ve `ErrorStateView` (async `onRetry` ile) bileşenlerini kullanır; boş durumlar için `ContentUnavailableView` kullanılır. View model'ler bir yükleme başladığında `errorMessage`'ı sıfırlar ve iptal edilen istekleri hata olarak göstermez (`error.isCancellation`).
 - View alt bileşenleri ait oldukları özelliğin `Views/Components/` klasöründe durur. Yeniden kullanılabilir gösterim mantığı `Core/Extensions` altında `+Display` extension'ları olarak yazılır.

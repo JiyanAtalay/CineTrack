@@ -14,33 +14,35 @@ struct StatisticsView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 24) {
-                    
-                    // MARK: - Summary Cards
-                    summarySection
-                    
-                    // MARK: - Rating Distribution
-                    if viewModel.totalRatedCount > 0 {
-                        RatingDistributionChart(data: viewModel.ratingDistribution)
-                    }
-                    
-                    // MARK: - Genre Distribution
-                    if !viewModel.genreDistribution.isEmpty {
-                        GenreDistributionChart(data: viewModel.genreDistribution)
-                    }
-
-                    // MARK: - Favorite Directors
-                    if !viewModel.directorDistribution.isEmpty {
-                        DirectorDistributionChart(data: viewModel.directorDistribution)
-                    }
-                    
+            Group {
+                if viewModel.totalWatchedCount == 0 && viewModel.totalRatedCount == 0 {
                     // MARK: - Empty State
-                    if viewModel.totalWatchedCount == 0 && viewModel.totalRatedCount == 0 {
-                        emptyState
+                    emptyState
+                } else {
+                    ScrollView {
+                        VStack(spacing: 24) {
+
+                            // MARK: - Summary Cards
+                            summarySection
+
+                            // MARK: - Rating Distribution
+                            if viewModel.totalRatedCount > 0 {
+                                RatingDistributionChart(data: viewModel.ratingDistribution)
+                            }
+
+                            // MARK: - Genre Distribution
+                            if !viewModel.genreDistribution.isEmpty {
+                                GenreDistributionChart(data: viewModel.genreDistribution)
+                            }
+
+                            // MARK: - Favorite Directors
+                            if !viewModel.directorDistribution.isEmpty {
+                                DirectorDistributionChart(data: viewModel.directorDistribution)
+                            }
+                        }
+                        .padding()
                     }
                 }
-                .padding()
             }
             .navigationTitle("Statistics")
             .onAppear {
@@ -99,9 +101,8 @@ struct StatisticsView: View {
         ContentUnavailableView(
             "No Statistics Yet",
             systemImage: "chart.bar",
-            description: Text("Start watching and rating movies to see your statistics here.")
+            description: Text("Mark movies as watched and rate them to see your statistics here.")
         )
-        .padding(.top, 40)
     }
 }
 

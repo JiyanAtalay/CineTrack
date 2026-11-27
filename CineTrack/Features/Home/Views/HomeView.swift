@@ -16,9 +16,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if viewModel.isLoading {
-                    ProgressView()
-                } else {
+                if viewModel.hasContent {
                     ScrollView {
                         LazyVStack(spacing: 24) {
                             
@@ -36,6 +34,28 @@ struct HomeView: View {
                             MovieSectionView(title: "Top Rated", movies: viewModel.topRatedMovies)
                         }
                     }
+                    .refreshable {
+                        await viewModel.fetchHomeData()
+                    }
+                } else if let errorMessage = viewModel.errorMessage {
+                    ErrorStateView(
+                        title: "Couldn't Load Movies",
+                        message: errorMessage,
+                        onRetry: { await viewModel.fetchHomeData() }
+                    )
+                } else if viewModel.isLoading || !viewModel.hasLoaded {
+                    LoadingStateView(message: "Loading movies…")
+                } else {
+                    ContentUnavailableView {
+                        Label("No Movies Yet", systemImage: "film")
+                    } description: {
+                        Text("There's nothing to show right now. Please check back later.")
+                    } actions: {
+                        Button("Refresh") {
+                            Task { await viewModel.fetchHomeData() }
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
                 }
             }
             .navigationTitle("CineTrack")
@@ -43,7 +63,7 @@ struct HomeView: View {
                 MovieDetailView(movieId: movie.id)
             }
             .task {
-                if viewModel.trendingMovies.isEmpty {
+                if !viewModel.hasLoaded {
                     await viewModel.fetchHomeData()
                 }
             }
